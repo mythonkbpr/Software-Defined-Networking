@@ -1,0 +1,76 @@
+Note : Pastikan ONOS Stop
+
+sudo apt-get update
+sudo apt-get -y install unzip vim wget
+
+# install Java JRE
+sudo apt-get -y install openjdk-8-jre
+sudo update-alternatives --config java
+sudo echo 'export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre' >> ~/.bashrc
+source ~/.bashrc
+
+# cek java home sudah sesuai atau belum
+echo $JAVA_HOME
+
+# Download OpenDaylight
+wget https://nexus.opendaylight.org/content/repositories/opendaylight.release/org/opendaylight/integration/karaf/0.8.4/karaf-0.8.4.zip
+
+# Install OpenDaylight
+# buat direktori untuk lokasi instalasi ODL
+sudo mkdir /usr/local/karaf
+
+# move opendaylight yang sudah di download ke direktori karaf
+mv karaf-0.8.4.zip /usr/local/karaf
+sudo unzip /usr/local/karaf/karaf-0.8.4.zip -d /usr/local/karaf/
+
+#install karaf
+sudo update-alternatives --install /usr/bin/karaf karaf /usr/local/karaf/karaf-0.8.4/bin/karaf 1
+sudo update-alternatives --config karaf
+which karaf
+
+#run opendaylight
+sudo -E karaf
+
+#hidupkan aplikasi ui & l2switch
+opendaylight-user@root>feature:install odl-l2switch-switch-ui
+
+#user default 
+username : admin
+password : admin
+
+##ODL as a service
+sudo nano /etc/systemd/system/opendaylight.service
+
+...
+[Unit]
+Description=OpenDaylight Controller
+After=network.target
+
+[Service]
+Type=simple
+User=root
+Group=root
+Environment="JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre"
+ExecStart=/usr/bin/karaf server
+ExecStop=/usr/bin/stop
+Restart=on-failure
+RestartSec=60s
+
+[Install]
+WantedBy=multi-user.target
+...
+
+#kemudian setting permission
+sudo chmod 0644 /etc/systemd/system/opendaylight.service
+
+#reload dan aktifkan opendaylight service
+systemctl daemon-reload
+sudo systemctl enable opendaylight.service
+sudo systemctl start opendaylight
+sudo systemctl status opendaylight
+
+
+sumber : https://john.soban.ski/how-to-install-opendaylight-as-a-service-on-ubuntu.html
+sumber : Lutfi as safii
+
+
