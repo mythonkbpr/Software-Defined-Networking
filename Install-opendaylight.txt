@@ -34,6 +34,10 @@ sudo -E karaf
 #hidupkan aplikasi ui & l2switch
 opendaylight-user@root>feature:install odl-l2switch-switch-ui
 
+#Mengaktifkan fitur aplikasi pada opendaylight
+opendaylight-user@root>feature:install odl-restconf odl-l2switch-switch odl-dlux-all
+
+
 #user default 
 username : admin
 password : admin
