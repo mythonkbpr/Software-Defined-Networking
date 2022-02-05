@@ -1,2 +1,34 @@
 #mython_kbpr
 #============
+#Download git
+sudo apt-get install git
+
+#clone Package mininet
+git clone git://github.com/mininet/mininet
+
+#masuk ke direktori mininet
+cd mininet
+
+#melihat list versi dari mininet
+git tag #
+
+#menentukan versi dari mininet yang akan diinstall
+git checkout -b mininet-(2.2.2 2.2.2) Mulai dari buka kurung dijelaskan bahwa versi yang diinstall pada mininet adalah versi 2.2.2
+
+#kembali ke folder sebelumnya
+cd ..
+
+#Install mininet dengan mengeksekusi perintah
+mininet/util/install.sh -[pilihan]
+ada beberapa opsi yang dapat kita pilih untuk menginstall mininet:
+
+"-a" jika kita ingin menginstall apapun termasuk Mininet VM, depedensi seperti Open vSwitch, wireshark dan POX controller. Secara default setelah penginstalan direktori dari paket tersebut akan berada pada direktori home kita.
+    "-nfv" akan penginstall Mininet, OpenFlow switch, dan Open vSwitch.
+    "-s" mydir opsi ini digunakan sebelum opsi lainnya, untuk menempatkan source code pada direktori yang kita inginkan, sehingga direktori source code tidak berada pada direktori home kita.
+
+#untuk ujicoba mininet berhasil 
+sudo mn --test pingall
+
+Referensi:
+https://www.zikrillah.com/2014/11/install-mininet-pada-ubuntu.html
+http://mininet.org/download/
