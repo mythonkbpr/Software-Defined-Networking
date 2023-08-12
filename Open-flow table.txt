@@ -1,0 +1,15 @@
+REST API
+http://<controller-IP>:8181/restconf/config/opendaylight-inventory:nodes/node/openflow:<switch-id>/table/0/flow/1
+
+membuat flows
+sh ov-ofctl add-flow s1 in_port=1, action=flood
+sh ov-ofctl add-flow s1 in_port=2, action=flood
+sh ov-ofctl add-flow s1 in_port=3, action=flood
+
+menampilkan flow
+sh ovs-ofctl dump-flows s1
+
+menghapus flow
+sh ovs-ofctl del-flows s1
+sh ovs-ofctl del-flows s2
+
